@@ -99,34 +99,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $umur = (int) $_POST['umur'];
     $punya_sim = isset($_POST['sim']);
-    $bisa_mengemudi = true; 
 
-    
     if ($umur < 17) {
         ?>
         <h2 class="error">Tidak Boleh Mengemudi</h2>
         <p>Alasan: Umur kurang dari 17 tahun</p>
         <?php
-        $bisa_mengemudi = false;
-    }
-
-    
-    if ($bisa_mengemudi && !$punya_sim) {
-        ?>
-        <h2 class="error">Tidak Boleh Mengemudi</h2>
-        <p>Alasan: Tidak memiliki SIM</p>
-        <?php
-        $bisa_mengemudi = false;
-    }
-
-    
-    if ($bisa_mengemudi) {
-        ?>
-        <h2 class="success">Boleh Mengemudi</h2>
-        <p>Anda <strong>diizinkan mengemudi</strong>.</p>
-        <p>Umur: <?= htmlspecialchars($umur) ?> tahun</p>
-        <p>Punya SIM: Ya</p>
-        <?php
+    } else {
+        if (!$punya_sim) {
+            ?>
+            <h2 class="error">Tidak Boleh Mengemudi</h2>
+            <p>Alasan: Tidak memiliki SIM</p>
+            <?php
+        } else {
+            ?>
+            <h2 class="success">Boleh Mengemudi</h2>
+            <p>Anda <strong>diizinkan mengemudi</strong>.</p>
+            <p>Umur: <?= htmlspecialchars($umur) ?> tahun</p>
+            <p>Punya SIM: Ya</p>
+            <?php
+        }
     }
     ?>
     <a href="">Cek lagi</a>
