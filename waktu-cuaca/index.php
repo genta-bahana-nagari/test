@@ -75,18 +75,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $waktu = $_POST['waktu'];
     $aktivitas = "";
 
-    if ($cuaca === "cerah" && $waktu === "pagi") {
-        $aktivitas = "Jogging di luar rumah";
-    } elseif ($cuaca === "cerah" && $waktu === "siang") {
-        $aktivitas = "Bersepeda";
-    } elseif ($cuaca === "cerah" && $waktu === "malam") {
-        $aktivitas = "Jalan santai";
-    } elseif ($cuaca === "hujan" && $waktu === "pagi") {
-        $aktivitas = "Membaca buku";
-    } elseif ($cuaca === "hujan" && $waktu === "siang") {
-        $aktivitas = "Menonton film";
-    } else {
-        $aktivitas = "Istirahat / tidur";
+    $kondisi = $cuaca . "-" . $waktu;
+
+    switch ($kondisi) {
+        case "cerah-pagi":
+            $aktivitas = "Jogging di luar rumah";
+            break;
+
+        case "cerah-siang":
+            $aktivitas = "Bersepeda";
+            break;
+
+        case "cerah-malam":
+            $aktivitas = "Jalan santai";
+            break;
+
+        case "hujan-pagi":
+            $aktivitas = "Membaca buku";
+            break;
+
+        case "hujan-siang":
+            $aktivitas = "Menonton film";
+            break;
+
+        default:
+            $aktivitas = "Istirahat / tidur";
     }
     ?>
     <h2 class="success">Aktivitas Disarankan</h2>
@@ -95,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <p class="result"><?= htmlspecialchars($aktivitas) ?></p>
 
     <a href="">Cek lagi</a>
-    <?php
+<?php
 } else {
     ?>
     <h3>Tentukan Aktivitas</h3>
@@ -118,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <button type="submit">Tentukan Aktivitas</button>
     </form>
-    <?php
+<?php
 }
 ?>
 </div>
