@@ -94,51 +94,59 @@
 <body>
 
 <div class="container">
+
 <?php
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $umur = (int) $_POST['umur'];
     $punya_sim = isset($_POST['sim']);
 
-    if ($umur < 17) {
-        ?>
-        <h2 class="error">Tidak Boleh Mengemudi</h2>
-        <p>Alasan: Umur kurang dari 17 tahun</p>
-        <?php
-    } else {
-        if (!$punya_sim) {
-            ?>
-            <h2 class="error">Tidak Boleh Mengemudi</h2>
-            <p>Alasan: Tidak memiliki SIM</p>
-            <?php
-        } else {
+    if ($umur >= 17) {
+
+        if ($punya_sim) {
             ?>
             <h2 class="success">Boleh Mengemudi</h2>
             <p>Anda <strong>diizinkan mengemudi</strong>.</p>
             <p>Umur: <?= htmlspecialchars($umur) ?> tahun</p>
             <p>Punya SIM: Ya</p>
             <?php
+        } else {
+            ?>
+            <h2 class="error">Tidak Boleh Mengemudi</h2>
+            <p>Anda <strong>belum diizinkan mengemudi</strong>.</p>
+            <p>Alasan: Tidak memiliki SIM</p>
+            <?php
         }
+
+    } else {
+        ?>
+        <h2 class="error">Tidak Boleh Mengemudi</h2>
+        <p>Anda <strong>belum diizinkan mengemudi</strong>.</p>
+        <p>Alasan: Umur kurang dari 17 tahun</p>
+        <?php
     }
     ?>
     <a href="">Cek lagi</a>
-<?php
+    <?php
+
+} else {
+    ?>
+    <h3>Cek Izin Mengemudi</h3>
+
+    <form method="post">
+        <label for="umur">Umur</label>
+        <input type="number" name="umur" id="umur" min="1" required>
+
+        <div class="checkbox">
+            <input type="checkbox" name="sim" id="sim">
+            <label for="sim">Punya SIM</label>
+        </div>
+
+        <button type="submit">Cek</button>
+    </form>
+    <?php
 }
 ?>
-
-<h3>Cek Izin Mengemudi</h3>
-
-<form method="post">
-    <label for="umur">Umur</label>
-    <input type="number" name="umur" id="umur" min="1" required>
-
-    <div class="checkbox">
-        <input type="checkbox" name="sim" id="sim">
-        <label for="sim">Punya SIM</label>
-    </div>
-
-    <button type="submit">Cek</button>
-</form>
 
 </div>
 
