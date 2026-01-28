@@ -73,33 +73,37 @@
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $cuaca = $_POST['cuaca'];
     $waktu = $_POST['waktu'];
-    $aktivitas = "";
+    $aktivitas = ""; 
+    $aktivitas_tertentu = false; 
 
-    $kondisi = $cuaca . "-" . $waktu;
+    if ($cuaca === "cerah" && $waktu === "pagi") {
+        $aktivitas = "Jogging di luar rumah";
+        $aktivitas_tertentu = true;
+    }
 
-    switch ($kondisi) {
-        case "cerah-pagi":
-            $aktivitas = "Jogging di luar rumah";
-            break;
+    if ($cuaca === "cerah" && $waktu === "siang") {
+        $aktivitas = "Bersepeda";
+        $aktivitas_tertentu = true;
+    }
 
-        case "cerah-siang":
-            $aktivitas = "Bersepeda";
-            break;
+    if ($cuaca === "cerah" && $waktu === "malam") {
+        $aktivitas = "Jalan santai";
+        $aktivitas_tertentu = true;
+    }
 
-        case "cerah-malam":
-            $aktivitas = "Jalan santai";
-            break;
+    if ($cuaca === "hujan" && $waktu === "pagi") {
+        $aktivitas = "Membaca buku";
+        $aktivitas_tertentu = true;
+    }
 
-        case "hujan-pagi":
-            $aktivitas = "Membaca buku";
-            break;
+    if ($cuaca === "hujan" && $waktu === "siang") {
+        $aktivitas = "Menonton film";
+        $aktivitas_tertentu = true;
+    }
 
-        case "hujan-siang":
-            $aktivitas = "Menonton film";
-            break;
-
-        default:
-            $aktivitas = "Istirahat / tidur";
+    
+    if (!$aktivitas_tertentu) {
+        $aktivitas = "Istirahat / tidur";
     }
     ?>
     <h2 class="success">Aktivitas Disarankan</h2>
@@ -109,31 +113,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <a href="">Cek lagi</a>
 <?php
-} else {
-    ?>
-    <h3>Tentukan Aktivitas</h3>
-
-    <form method="post">
-        <label for="cuaca">Cuaca</label>
-        <select name="cuaca" id="cuaca" required>
-            <option value="">-- Pilih Cuaca --</option>
-            <option value="cerah">Cerah</option>
-            <option value="hujan">Hujan</option>
-        </select>
-
-        <label for="waktu">Waktu</label>
-        <select name="waktu" id="waktu" required>
-            <option value="">-- Pilih Waktu --</option>
-            <option value="pagi">Pagi</option>
-            <option value="siang">Siang</option>
-            <option value="malam">Malam</option>
-        </select>
-
-        <button type="submit">Tentukan Aktivitas</button>
-    </form>
-<?php
 }
 ?>
+
+<h3>Tentukan Aktivitas</h3>
+
+<form method="post">
+    <label for="cuaca">Cuaca</label>
+    <select name="cuaca" id="cuaca" required>
+        <option value="">-- Pilih Cuaca --</option>
+        <option value="cerah">Cerah</option>
+        <option value="hujan">Hujan</option>
+    </select>
+
+    <label for="waktu">Waktu</label>
+    <select name="waktu" id="waktu" required>
+        <option value="">-- Pilih Waktu --</option>
+        <option value="pagi">Pagi</option>
+        <option value="siang">Siang</option>
+        <option value="malam">Malam</option>
+    </select>
+
+    <button type="submit">Tentukan Aktivitas</button>
+</form>
+
 </div>
 
 </body>

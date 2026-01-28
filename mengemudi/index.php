@@ -99,20 +99,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $umur = (int) $_POST['umur'];
     $punya_sim = isset($_POST['sim']);
+    $bisa_mengemudi = true; 
 
+    
     if ($umur < 17) {
         ?>
         <h2 class="error">Tidak Boleh Mengemudi</h2>
         <p>Alasan: Umur kurang dari 17 tahun</p>
         <?php
+        $bisa_mengemudi = false;
+    }
 
-    } else if ($punya_sim == false) {
+    
+    if ($bisa_mengemudi && !$punya_sim) {
         ?>
         <h2 class="error">Tidak Boleh Mengemudi</h2>
         <p>Alasan: Tidak memiliki SIM</p>
         <?php
+        $bisa_mengemudi = false;
+    }
 
-    } else {
+    
+    if ($bisa_mengemudi) {
         ?>
         <h2 class="success">Boleh Mengemudi</h2>
         <p>Anda <strong>diizinkan mengemudi</strong>.</p>
@@ -122,26 +130,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     ?>
     <a href="">Cek lagi</a>
-    <?php
-
-} else {
-    ?>
-    <h3>Cek Izin Mengemudi</h3>
-
-    <form method="post">
-        <label for="umur">Umur</label>
-        <input type="number" name="umur" id="umur" min="1" required>
-
-        <div class="checkbox">
-            <input type="checkbox" name="sim" id="sim">
-            <label for="sim">Punya SIM</label>
-        </div>
-
-        <button type="submit">Cek</button>
-    </form>
-    <?php
+<?php
 }
 ?>
+
+<h3>Cek Izin Mengemudi</h3>
+
+<form method="post">
+    <label for="umur">Umur</label>
+    <input type="number" name="umur" id="umur" min="1" required>
+
+    <div class="checkbox">
+        <input type="checkbox" name="sim" id="sim">
+        <label for="sim">Punya SIM</label>
+    </div>
+
+    <button type="submit">Cek</button>
+</form>
+
 </div>
 
 </body>
