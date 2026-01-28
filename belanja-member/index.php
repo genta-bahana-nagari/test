@@ -2,6 +2,7 @@
 $diskon = null;
 $bonus = null;
 $totalBayar = null;
+$total = null;
 
 if (isset($_POST['hitung'])) {
     $total = $_POST['total'];
@@ -9,15 +10,18 @@ if (isset($_POST['hitung'])) {
     if ($total >= 500000) {
         $diskon = 20;
         $bonus = "Voucher 50.000";
-    } elseif ($total >= 300000) {
-        $diskon = 15;
-        $bonus = "Voucher 25.000";
     } else {
-        $diskon = 10;
-        $bonus = "Tidak ada";
+        if ($total >= 300000) {
+            $diskon = 15;
+            $bonus = "Voucher 25.000";
+        } else {
+            $diskon = 10;
+            $bonus = "Tidak ada";
+        }
     }
 
-    $totalBayar = $total - ($total * $diskon / 100);
+    $potongan   = $total * $diskon / 100;
+    $totalBayar = $total - $potongan;
 }
 ?>
 <!DOCTYPE html>
@@ -52,25 +56,32 @@ if (isset($_POST['hitung'])) {
 <body>
 
 <div class="box">
-    <?php if (!isset($_POST['hitung'])) { ?>
-        <h3>Pelanggan Member</h3>
-        <form method="post">
-            <label>Total Belanja</label>
-            <input type="number" name="total" required>
-            <button type="submit" name="hitung">Hitung</button>
-        </form>
-    <?php } else { ?>
-        <h3>Hasil Perhitungan</h3>
-        <div class="hasil">
-            <p>Total Belanja: Rp <?= number_format($total,0,',','.') ?></p>
-            <p>Diskon: <?= $diskon ?>%</p>
-            <p>Bonus: <?= $bonus ?></p>
-            <p>Total Bayar: Rp <?= number_format($totalBayar,0,',','.') ?></p>
-        </div>
-        <form method="post">
-            <button type="submit">Hitung Ulang</button>
-        </form>
-    <?php } ?>
+
+<?php if (!isset($_POST['hitung'])) { ?>
+
+    <h3>Pelanggan Member</h3>
+    <form method="post">
+        <label>Total Belanja</label>
+        <input type="number" name="total" required>
+        <button type="submit" name="hitung">Hitung</button>
+    </form>
+
+<?php } else { ?>
+
+    <h3>Hasil Perhitungan</h3>
+    <div class="hasil">
+        <p>Total Belanja : Rp <?= number_format($total,0,',','.') ?></p>
+        <p>Diskon        : <?= $diskon ?>%</p>
+        <p>Total Bayar   : Rp <?= number_format($totalBayar,0,',','.') ?></p>
+        <p>Bonus         : <?= $bonus ?></p>
+    </div>
+
+    <form method="post">
+        <button type="submit">Hitung Ulang</button>
+    </form>
+
+<?php } ?>
+
 </div>
 
 </body>
