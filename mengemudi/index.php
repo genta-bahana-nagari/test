@@ -41,7 +41,6 @@
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 14px;
         }
 
         .checkbox {
@@ -95,26 +94,35 @@
 <body>
 
 <div class="container">
+
 <?php
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
     $umur = (int) $_POST['umur'];
     $punya_sim = isset($_POST['sim']);
 
-    if ($umur >= 17 && $punya_sim) {
-        // BOLEH MENGEMUDI
-        ?>
-        <h2 class="success">Boleh Mengemudi</h2>
-        <p>Anda <strong>diizinkan mengemudi</strong>.</p>
-        <p>Umur: <?= htmlspecialchars($umur) ?> tahun</p>
-        <p>Punya SIM: Ya</p>
-        <?php
+    if ($umur >= 17) {
+
+        if ($punya_sim) {
+            ?>
+            <h2 class="success">Boleh Mengemudi</h2>
+            <p>Anda <strong>diizinkan mengemudi</strong>.</p>
+            <p>Umur: <?= htmlspecialchars($umur) ?> tahun</p>
+            <p>Punya SIM: Ya</p>
+            <?php
+        } else {
+            ?>
+            <h2 class="error">Tidak Boleh Mengemudi</h2>
+            <p>Anda <strong>belum diizinkan mengemudi</strong>.</p>
+            <p>Alasan: Tidak memiliki SIM</p>
+            <?php
+        }
+
     } else {
-        // TIDAK BOLEH MENGEMUDI
         ?>
         <h2 class="error">Tidak Boleh Mengemudi</h2>
         <p>Anda <strong>belum diizinkan mengemudi</strong>.</p>
-        <p>Umur: <?= htmlspecialchars($umur) ?> tahun</p>
-        <p>Punya SIM: <?= $punya_sim ? 'Ya' : 'Tidak' ?></p>
+        <p>Alasan: Umur kurang dari 17 tahun</p>
         <?php
     }
     ?>
@@ -122,7 +130,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php
 
 } else {
-    // FORM INPUT
     ?>
     <h3>Cek Izin Mengemudi</h3>
 
@@ -140,6 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php
 }
 ?>
+
 </div>
 
 </body>
